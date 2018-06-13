@@ -1,12 +1,13 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: matheus
+ * User: Ewerson
  * Date: 18/04/18
- * Time: 10:21
+ * Time: 11:07
  */
 namespace Ewersonfc\BBboleto;
 
+use Ewersonfc\BBboleto\Requests\BoletoRequest;
 use Ewersonfc\BBboleto\Services\ServiceAuthorization;
 use Ewersonfc\BBboleto\Validates\BancoDoBrasilValidate;
 
@@ -28,16 +29,17 @@ class BancoDoBrasil
 	* @return bool
 	*/
   	function __construct(array $config)
-    {
+	{
 		$bancoDoBrasilValidate = new BancoDoBrasilValidate();
 		$bancoDoBrasilValidate->config($config);
 
 		$serviceAuthorization = new ServiceAuthorization();
 		$this->authorization = $serviceAuthorization->authorize($config);
-    }
+	}
 
-    public function register()
-    {
-    	
-    }
+	public function register(BoletoRequest $boletoRequest)
+	{
+    	$serviveRegister = new ServiceRegister();
+    	$serviveRegister->register($boletoRequest, $this->authorization);
+	}
 }

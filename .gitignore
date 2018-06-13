@@ -2,3 +2,4 @@
 /.idea
 composer.phar
 .DS_Store
+/examples

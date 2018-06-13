@@ -4,7 +4,8 @@
         "guzzlehttp/guzzle": "~6.0",
         "illuminate/contracts": "^5.1",
         "nesbot/carbon": "^1.29",
-        "illuminate/support": "^5.1"
+        "illuminate/support": "^5.1",
+        "cakephp/utility": "^3.6"
     },
     "autoload": {
     	"psr-4": {
