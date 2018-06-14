@@ -1,4 +1,4 @@
-<?php Ewersonfc\BBboleto\Constants;
+<?php namespace Ewersonfc\BBboleto\Constants;
 
 class TipoCanal
 {

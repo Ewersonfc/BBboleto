@@ -44,12 +44,12 @@ $juros->setTipo(Juros::VALOR_POR_DIA_DE_ATRASO)// [Tipo: inteiro| Opcional |  Va
 	->setPercentual('99999,99'); // [Tipo: numeric | Opcional/Condicional | O percentual de desconto quando informado não pode ser maior do que 100% e o campo “setValor()” deve ser igual a ‘0’ (zero) ]
 	// ->setValor(); // [Tipo: inteiro| Opcional/Condicional | Se informado, "->setPercentual()" deve ser ‘0’ (zero) e valor menor que "VALOR ORIGINAL DO TÍTULO" ]
 
-// Nota: O Multa é opcional, caso não tenha desconto no título não há necessiade de preencher esta entidade e tbm não há necessidade de setar no Request
-$multa = new MultaEntity;
-$multa->setTipo(Multa::A_PARTIR_DATA)
-	->setData('18/08/2018') // [Tipo: date | Obrigatorio/Condicional | Se informado Multa::A_PARTIR_DATA e não pode ser maior que a “DATA DE VENCIMENTO DO TÍTULO” ]
-	->setPercentual('99999,99'); // [Tipo: numeric | Opcional | O percentual de desconto, quando informado, não pode ser maior do que 100% e o campo “VALOR DA MULTA DO TÍTULO” deve ser igual a ‘0’ (zero)]
-	// ->setValor(); // [Tipo: numeric | Opcional | O percentual de desconto, quando informado, não pode ser maior do que 100% e o campo “VALOR DA MULTA DO TÍTULO” deve ser igual a ‘0’ (zero)]
+// // Nota: O Multa é opcional, caso não tenha desconto no título não há necessiade de preencher esta entidade e tbm não há necessidade de setar no Request
+// $multa = new MultaEntity;
+// $multa->setTipo(Multa::A_PARTIR_DATA)
+// 	->setData('18/08/2018') // [Tipo: date | Obrigatorio/Condicional | Se informado Multa::A_PARTIR_DATA e não pode ser maior que a “DATA DE VENCIMENTO DO TÍTULO” ]
+// 	->setPercentual('99999,99'); // [Tipo: numeric | Opcional | O percentual de desconto, quando informado, não pode ser maior do que 100% e o campo “VALOR DA MULTA DO TÍTULO” deve ser igual a ‘0’ (zero)]
+// 	// ->setValor(); // [Tipo: numeric | Opcional | O percentual de desconto, quando informado, não pode ser maior do que 100% e o campo “VALOR DA MULTA DO TÍTULO” deve ser igual a ‘0’ (zero)]
 
 $pagador = new PagadorEntity;
 $pagador->setTipoDocumento(TipoDocumento::CNPJ) // [Campo Opcional] Se informado só serão aceitos os valores ‘1’ ou ‘2’ como descrito no domínio. PRESENTES NA ARQUIVO (Contants\TipoDocumento.php)
@@ -81,7 +81,7 @@ $boletoRequest->setConvenio('9999999') // [Tipo: inteiro| Obrigatório |Valor: p
 	->setDiasProtesto('2') // [Tipo: inteiro | Opcional | define o número de dias decorrentes, após a data de vencimento, para inicialização do processo de cobrança, via protesto, do Título de Cobrança.]
 	//Se informado, só será aceito se a combinação dos campos "setModalidade()" e “setTipoTitulo()” forem compatíveis com a possibilidade de protesto
 	->setJuros($juros)
-	->setMulta($multa)
+	// ->setMulta($multa)
 	->setAceite(AceiteTitulo::ACEITE) // [Tipo: string | Obrigatório | Só serão aceitos os valores ‘AceiteTitulo::ACEITE’ ou ‘AceiteTitulo::NAO_ACEITE’ como descrito no domínio.]
 	->setTipoTitulo(TipoTitulo::DUPLICATA_SERVICO) // [Tipo: string | Opcional | Se não informado irá assumir TipoTitulo::DUPLICATA_SERVICO]
 	->setDescricaoTipoTitulo("Texto livre") // [Tipo: string | Opcional | Campo de texto livre]
@@ -95,4 +95,4 @@ $boletoRequest->setConvenio('9999999') // [Tipo: inteiro| Obrigatório |Valor: p
 	->setAvalista($avalista);
 
 
-$bancoDoBrasil->registrar($boletoRequest);
+$bancoDoBrasil->register($boletoRequest);

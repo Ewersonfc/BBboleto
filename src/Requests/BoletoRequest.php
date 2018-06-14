@@ -1,5 +1,6 @@
 <?php namespace Ewersonfc\BBboleto\Requests;
 
+use Ewersonfc\BBboleto\Constants\Modalidade;
 use Ewersonfc\BBboleto\Entities\AvalistaEntity;
 use Ewersonfc\BBboleto\Entities\DescontoEntity;
 use Ewersonfc\BBboleto\Entities\JurosEntity;
@@ -14,7 +15,7 @@ class BoletoRequest
 
 	private $variacaoCarteira;
 
-	private $modalidade;
+	private $modalidade = Modalidade::SIMPLES; // Default 
 
 	private $dataEmissao;
 

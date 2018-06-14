@@ -9,6 +9,7 @@ namespace Ewersonfc\BBboleto;
 
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 use Ewersonfc\BBboleto\Services\ServiceAuthorization;
+use Ewersonfc\BBboleto\Services\ServiceRegister;
 use Ewersonfc\BBboleto\Validates\BancoDoBrasilValidate;
 
 /**
