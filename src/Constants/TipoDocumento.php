@@ -2,7 +2,7 @@
 
 class TipoDocumento
 {
-	const CPF = 'CPF';
+	const CPF = 1;
 
-	const CNPJ = 'CNPJ';
+	const CNPJ = 2;
 }

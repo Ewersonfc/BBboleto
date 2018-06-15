@@ -1,11 +1,15 @@
 <?php namespace Ewersonfc\BBboleto\Requests;
 
+use Ewersonfc\BBboleto\Constants\AceiteTitulo;
 use Ewersonfc\BBboleto\Constants\Modalidade;
+use Ewersonfc\BBboleto\Constants\TipoTitulo;
+use Ewersonfc\BBboleto\Constants\RecebimentoParcial;
 use Ewersonfc\BBboleto\Entities\AvalistaEntity;
 use Ewersonfc\BBboleto\Entities\DescontoEntity;
 use Ewersonfc\BBboleto\Entities\JurosEntity;
 use Ewersonfc\BBboleto\Entities\MultaEntity;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
+use Ewersonfc\BBboleto\Helpers\BancoDoBrasil as BancoDoBrasilHelper;
 
 class BoletoRequest 
 {
@@ -25,19 +29,19 @@ class BoletoRequest
 
 	private $desconto;
 
-	private $diasProtesto;
+	private $diasProtesto = 0;
 
 	private $juros;
 
 	private $multa;
 
-	private $aceite;
+	private $aceite = AceiteTitulo::NAO_ACEITE;
 
-	private $tipoTitulo;
+	private $tipoTitulo = TipoTitulo::DUPLICATA_SERVICO;
 
 	private $descricaoTipoTitulo;
 
-	private $permissaoRecebimentoParcial;
+	private $permissaoRecebimentoParcial = RecebimentoParcial::NAO;
 
 	private $seuNumero; // = textoNumeroTITULOBeneficiario
 
@@ -104,7 +108,7 @@ class BoletoRequest
 	 
 	public function setDataEmissao($dataEmissao)
 	{
-	    $this->dataEmissao = $dataEmissao;
+	    $this->dataEmissao = BancoDoBrasilHelper::generateDateTimeFromBoleto($dataEmissao);
 	    return $this;
 	}
 
@@ -115,7 +119,7 @@ class BoletoRequest
 	 
 	public function setDataVencimento($dataVencimento)
 	{
-	    $this->dataVencimento = $dataVencimento;
+	    $this->dataVencimento = BancoDoBrasilHelper::generateDateTimeFromBoleto($dataVencimento);
 	    return $this;
 	}
 

@@ -3,6 +3,7 @@
 namespace Ewersonfc\BBboleto\Entities;
 
 use Ewersonfc\BBboleto\Constants\Desconto;
+use Ewersonfc\BBboleto\Helpers\BancoDoBrasil as BancoDoBrasilHelper;
 
 class DescontoEntity
 {
@@ -34,7 +35,7 @@ class DescontoEntity
 	 
 	public function setData($data)
 	{
-	    $this->data = $data;
+	    $this->data = BancoDoBrasilHelper::generateDateTimeFromBoleto($data);
 	    return $this;
 	}
 

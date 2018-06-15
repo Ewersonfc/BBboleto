@@ -1,6 +1,7 @@
 <?php namespace Ewersonfc\BBboleto\Entities;
 
 use Ewersonfc\BBboleto\Constants\Multa;
+use Ewersonfc\BBboleto\Helpers\BancoDoBrasil as BancoDoBrasilHelper;
 
 
 class MultaEntity
@@ -31,7 +32,7 @@ class MultaEntity
 	 
 	public function setData($data)
 	{
-	    $this->data = $data;
+	    $this->data = BancoDoBrasilHelper::generateDateTimeFromBoleto($data);
 	    return $this;
 	}
 

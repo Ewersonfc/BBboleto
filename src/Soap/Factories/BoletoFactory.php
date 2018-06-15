@@ -1,56 +1,56 @@
 <?php namespace Ewersonfc\BBboleto\Soap\Factories;
 
-use Cake\Utility\Xml;
+use SoapVar;
 use Ewersonfc\BBboleto\Entities\DescontoEntity;
 use Ewersonfc\BBboleto\Entities\JurosEntity;
 use Ewersonfc\BBboleto\Entities\MultaEntity;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
 use Ewersonfc\BBboleto\Entities\AvalistaEntity;
 use Ewersonfc\BBboleto\Exceptions\BoletoException;
+use Ewersonfc\BBboleto\Helpers\BancoDoBrasil as BancoDoBrasilHelper;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 use Ewersonfc\BBboleto\Constants\TipoCanal;
+use Ewersonfc\BBboleto\Soap\Config;
 
 
 class BoletoFactory
 {
-	const CHAVE_USUARIO = 1;
-
 	public function make(BoletoRequest $boletoRequest)
 	{
 		$data = [];
 
-		$data['numeroConvenio'] = $boletoRequest->getConvenio();
-		$data['numeroCarteira'] = $boletoRequest->getCarteira();
-		$data['numeroVariacaoCarteira'] = $boletoRequest->getVariacaoCarteira();
-		$data['codigoModalidadeTitulo'] = $boletoRequest->getModalidade();
-		$data['dataEmissaoTitulo'] = $boletoRequest->getDataEmissao();
-		$data['dataVencimentoTitulo'] = $boletoRequest->getDataVencimento();
-		$data['valorOriginalTitulo'] = $boletoRequest->getValorOriginal();
+		$data[] = new SoapVar((int) $boletoRequest->getConvenio(), XSD_INT, null, null, 'numeroConvenio', Config::NAMESPACE);
+		$data[] = new SoapVar((int) $boletoRequest->getCarteira(), XSD_INT, null, null, 'numeroCarteira', Config::NAMESPACE);
+		$data[] = new SoapVar((int) $boletoRequest->getVariacaoCarteira(), XSD_INT, null, null, 'numeroVariacaoCarteira', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getModalidade(), XSD_INT, null, null, 'codigoModalidadeTitulo', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getDataEmissao()->format('d.m.Y'), XSD_DATE, null, null, 'dataEmissaoTitulo', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getDataVencimento()->format('d.m.Y'), XSD_DATE, null, null, 'dataVencimentoTitulo', Config::NAMESPACE);
+		$data[] = new SoapVar(BancoDoBrasilHelper::formatMoney($boletoRequest->getValorOriginal()), XSD_STRING, null, null, 'valorOriginalTitulo', Config::NAMESPACE);
 
 		$data = $this->setDescontoOnBody($data, $boletoRequest->getDesconto());
 
-		$data['quantidadeDiaProtesto'] = $boletoRequest->getDiasProtesto();
+		$data[] = new SoapVar($boletoRequest->getDiasProtesto(), XSD_INT, null, null, 'quantidadeDiaProtesto', Config::NAMESPACE);
 
 		$data = $this->setJurosOnBody($data, $boletoRequest->getJuros());
 
 		$data = $this->setMultaOnBody($data, $boletoRequest->getMulta());
 
-		$data['codigoAceiteTitulo'] = $boletoRequest->getAceite();
-		$data['codigoTipoTitulo'] = $boletoRequest->getTipoTitulo();
-		$data['textoDescricaoTipoTitulo'] = $boletoRequest->getDescricaoTipoTitulo();
-		$data['indicadorPermissaoRecebimentoParcial'] = $boletoRequest->getPermissaoRecebimentoParcial();
-		$data['textoNumeroTituloBeneficiario'] = $boletoRequest->getSeuNumero();
-		$data['textoCampoUtilizacaoBeneficiario'] = $boletoRequest->getCampoUtilizacaoBeneficiario();
-		$data['codigoTipoContaCaucao'] = $boletoRequest->getCodigoTipoContaCaucao();
-		$data['textoNumeroTituloCliente'] = $boletoRequest->getNossoNumero();
-		$data['textoMensagemBloquetoOcorrencia'] = $boletoRequest->getInstrucoes();
+		$data[] = new SoapVar($boletoRequest->getAceite(), XSD_STRING, null, null, 'codigoAceiteTitulo', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getTipoTitulo(), XSD_STRING, null, null, 'codigoTipoTitulo', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getDescricaoTipoTitulo(), XSD_STRING, null, null, 'textoDescricaoTipoTitulo', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getPermissaoRecebimentoParcial(), XSD_STRING, null, null, 'indicadorPermissaoRecebimentoParcial', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getSeuNumero(), XSD_INT, null, null, 'textoNumeroTituloBeneficiario', Config::NAMESPACE);
+		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit($boletoRequest->getCampoUtilizacaoBeneficiario(), 25), XSD_STRING, null, null, 'textoCampoUtilizacaoBeneficiario', Config::NAMESPACE);
+		$data[] = new SoapVar($boletoRequest->getCodigoTipoContaCaucao(), XSD_INT, null, null, 'codigoTipoContaCaucao', Config::NAMESPACE);	
+		$data[] = new SoapVar(BancoDoBrasilHelper::makeNossoNumero($boletoRequest->getConvenio(), $boletoRequest->getNossoNumero()), XSD_STRING, null, null, 'textoNumeroTituloCliente', Config::NAMESPACE);
+		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit($boletoRequest->getInstrucoes(), 220), XSD_STRING, null, null, 'textoMensagemBloquetoOcorrencia', Config::NAMESPACE);
 		
+	
 		$data = $this->setPagadorOnBody($data, $boletoRequest->getPagador());
-
 		$data = $this->setAvalistaOnBody($data, $boletoRequest->getAvalista());
 
-		$data['codigoChaveUsuario'] = self::CHAVE_USUARIO;
-		$data['codigoTipoCanalSolicitacao'] = TipoCanal::IIB_WEBSERVICE; // default
+		$data[] = new SoapVar(Config::CHAVE_USUARIO, XSD_INT, null, null, 'codigoChaveUsuario', Config::NAMESPACE);
+		$data[] = new SoapVar(TipoCanal::IIB_WEBSERVICE, XSD_STRING, null, null, 'codigoTipoCanalSolicitacao', Config::NAMESPACE);
 
 		return $data;
 	}
@@ -66,11 +66,11 @@ class BoletoFactory
 	{
 		$dataDesconto = [];
 
-		$dataDesconto['codigoTipoDesconto'] = $descontoEntity->getTipo();
-		$dataDesconto['dataDescontoTitulo'] = $descontoEntity->getData();
-		$dataDesconto['percentualDescontoTitulo'] = $descontoEntity->getPercentual();
-		$dataDesconto['valorDescontoTitulo'] = $descontoEntity->getValor();
-		$dataDesconto['valorAbatimentoTitulo'] = $descontoEntity->getValorAbatimento();
+		$dataDesconto[] = new SoapVar($descontoEntity->getTipo(), XSD_INT, null, null, 'codigoTipoDesconto', Config::NAMESPACE);
+		$dataDesconto[] = new SoapVar($descontoEntity->getData(), XSD_DATE, null, null, 'dataDescontoTitulo', Config::NAMESPACE);
+		$dataDesconto[] = new SoapVar($descontoEntity->getPercentual(), XSD_STRING, null, null, 'percentualDescontoTitulo', Config::NAMESPACE);
+		$dataDesconto[] = new SoapVar(BancoDoBrasilHelper::formatMoney($descontoEntity->getValor()), XSD_STRING, null, null, 'valorDescontoTitulo', Config::NAMESPACE);
+		$dataDesconto[] = new SoapVar(BancoDoBrasilHelper::formatMoney($descontoEntity->getValorAbatimento()), XSD_STRING, null, null, 'valorAbatimentoTitulo', Config::NAMESPACE);
 
 		return array_merge($data, $dataDesconto);
 	}
@@ -86,9 +86,9 @@ class BoletoFactory
 	{
 		$dataJuros = [];
 
-		$dataJuros['codigoTipoJuroMora'] = $jurosEntity->getTipo();
-		$dataJuros['percentualJuroMoraTitulo'] = $jurosEntity->getPercentual();
-		$dataJuros['valorJuroMoraTitulo'] = $jurosEntity->getValor();
+		$dataJuros[] = new SoapVar($jurosEntity->getTipo(), XSD_INT, null, null, 'codigoTipoJuroMora', Config::NAMESPACE);
+		$dataJuros[] = new SoapVar($jurosEntity->getPercentual(), XSD_STRING, null, null, 'percentualJuroMoraTitulo', Config::NAMESPACE);
+		$dataJuros[] = new SoapVar(BancoDoBrasilHelper::formatMoney($jurosEntity->getValor()), XSD_STRING, null, null, 'valorJuroMoraTitulo', Config::NAMESPACE);
 
 		return array_merge($data, $dataJuros);
 	}
@@ -104,10 +104,10 @@ class BoletoFactory
 	{
 		$dataMulta = [];
 
-		$dataMulta['codigoTipoMulta'] = $multaEntity->getTipo();
-		$dataMulta['dataMultaTitulo'] = $multaEntity->getData();
-		$dataMulta['percentualMultaTitulo'] = $multaEntity->getPercentual();
-		$dataMulta['valorMultaTitulo'] = $multaEntity->getValor();
+		$dataMulta[] = new SoapVar($multaEntity->getTipo(), XSD_INT, null, null, 'codigoTipoMulta', Config::NAMESPACE);
+		$dataMulta[] = new SoapVar($multaEntity->getData()->format('d.m.Y'), XSD_DATE, null, null, 'dataMultaTitulo', Config::NAMESPACE);
+		$dataMulta[] = new SoapVar($multaEntity->getPercentual(), XSD_STRING, null, null, 'percentualMultaTitulo', Config::NAMESPACE);
+		$dataMulta[] = new SoapVar(BancoDoBrasilHelper::formatMoney($multaEntity->getValor()), XSD_STRING, null, null, 'valorMultaTitulo', Config::NAMESPACE);
 
 		return array_merge($data, $dataMulta);
 	}
@@ -123,15 +123,15 @@ class BoletoFactory
 	{
 		$dataPagador = [];
 
-		$dataPagador['codigoTipoInscricaoPagador'] = $pagadorEntity->getTipoDocumento();
-		$dataPagador['numeroInscricaoPagador'] = $pagadorEntity->getDocumento();
-		$dataPagador['nomePagador'] = $pagadorEntity->getNome();
-		$dataPagador['textoEnderecoPagador'] = $pagadorEntity->getLogradouro();
-		$dataPagador['numeroCepPagador'] = $pagadorEntity->getCep();
-		$dataPagador['nomeMunicipioPagador'] = $pagadorEntity->getMunicipio();
-		$dataPagador['nomeBairroPagador'] = $pagadorEntity->getBairro();
-		$dataPagador['siglaUfPagador'] = $pagadorEntity->getUf();
-		$dataPagador['textoNumeroTelefonePagador'] = $pagadorEntity->getTelefone();
+		$dataPagador[] = new SoapVar($pagadorEntity->getTipoDocumento(), XSD_INT, null, null, 'codigoTipoInscricaoPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar(BancoDoBrasilHelper::numbers($pagadorEntity->getDocumento()), XSD_STRING, null, null, 'numeroInscricaoPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar($pagadorEntity->getNome(), XSD_STRING, null, null, 'nomePagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar($pagadorEntity->getLogradouro(), XSD_STRING, null, null, 'textoEnderecoPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar(BancoDoBrasilHelper::numbers($pagadorEntity->getCep()), XSD_INT, null, null, 'numeroCepPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar($pagadorEntity->getMunicipio(), XSD_STRING, null, null, 'nomeMunicipioPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar($pagadorEntity->getBairro(), XSD_STRING, null, null, 'nomeBairroPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar($pagadorEntity->getUf(), XSD_STRING, null, null, 'siglaUfPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar(BancoDoBrasilHelper::numbers($pagadorEntity->getTelefone()), XSD_STRING, null, null, 'textoNumeroTelefonePagador', Config::NAMESPACE);
 
 		return array_merge($data, $dataPagador);
 	}
@@ -147,9 +147,9 @@ class BoletoFactory
 	{
 		$dataAvalista = [];
 
-		$dataAvalista['codigoTipoInscricaoAvalista'] = $avalistaEntity->getTipoDocumento();
-		$dataAvalista['numeroInscricaoAvalista'] = $avalistaEntity->getDocumento();
-		$dataAvalista['nomeAvalistaTitulo'] = $avalistaEntity->getNome();
+		$dataAvalista[] = new SoapVar($avalistaEntity->getTipoDocumento(), XSD_INT, null, null, 'codigoTipoInscricaoAvalista', Config::NAMESPACE);
+		$dataAvalista[] = new SoapVar($avalistaEntity->getDocumento(), XSD_STRING, null, null, 'numeroInscricaoAvalista', Config::NAMESPACE);
+		$dataAvalista[] = new SoapVar($avalistaEntity->getNome(), XSD_STRING, null, null, 'nomeAvalistaTitulo', Config::NAMESPACE);
 
 		return array_merge($data, $dataAvalista);
 	}
