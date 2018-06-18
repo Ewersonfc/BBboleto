@@ -15,12 +15,15 @@ use Ewersonfc\BBboleto\Constants\Multa;
 use Ewersonfc\BBboleto\Entities\JurosEntity;
 use Ewersonfc\BBboleto\Entities\MultaEntity;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
+use Ewersonfc\BBboleto\Exceptions\BoletoException;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 
 $bancoDoBrasil = new BancoDoBrasil([
 	'clientId' => 'eyJpZCI6IjgwNDNiNTMtZjQ5Mi00YyIsImNvZGlnb1B1YmxpY2Fkb3IiOjEwOSwiY29kaWdvU29mdHdhcmUiOjEsInNlcXVlbmNpYWxJbnN0YWxhY2FvIjoxfQ',
 	'clientSecret' => 'eyJpZCI6IjBjZDFlMGQtN2UyNC00MGQyLWI0YSIsImNvZGlnb1B1YmxpY2Fkb3IiOjEwOSwiY29kaWdvU29mdHdhcmUiOjEsInNlcXVlbmNpYWxJbnN0YWxhY2FvIjoxLCJzZXF1ZW5jaWFsQ3JlZGVuY2lhbCI6MX0',
-	'production' => false
+	'production' => false,
+	'formato' => 'pdf or html'
+	'logo' =>  '/path/sualogo.png'
 ]);
 
 $juros = new JurosEntity;
@@ -45,7 +48,7 @@ $pagador->setTipoDocumento(TipoDocumento::CNPJ)
 	->setTelefone(1131365858); 
 
 $boletoRequest = new BoletoRequest();
-$boletoRequest->setConvenio(1014051)
+$boletoRequest->setConvenio(2625444)
 	->setCarteira(17) 
 	->setVariacaoCarteira(19) 
 	->setDataEmissao('2018-05-01') 
@@ -57,9 +60,15 @@ $boletoRequest->setConvenio(1014051)
 	->setSeuNumero('987654321987654')
 	->setCampoUtilizacaoBeneficiario('0000000')
 	->setCodigoTipoContaCaucao(1)
-	->setNossoNumero('0000000124')
+	->setNossoNumero('0000000156')
 	->setInstrucoes("instrução") 
 	->setPagador($pagador); 
 
-$bancoDoBrasil->register($boletoRequest);
+try {
+	$bancoDoBrasil->register($boletoRequest);
+} catch (BoletoException $e) {
+	throw new \Exception($e->getMessage());	
+}
+
+
 

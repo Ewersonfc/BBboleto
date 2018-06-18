@@ -12,12 +12,11 @@ use Ewersonfc\BBboleto\Entities\PagadorEntity;
 use Ewersonfc\BBboleto\Exceptions\PagadorException;
 use Ewersonfc\BBboleto\Exceptions\BoletoException;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
+use Ewersonfc\BBboleto\Responses\BoletoResponse;
 use Ewersonfc\BBboleto\Soap\Config;
 use Ewersonfc\BBboleto\Soap\Clients\BoletoClient;
 use Ewersonfc\BBboleto\Soap\Factories\BoletoFactory;
 
-
-use GuzzleHttp\Client;
 /**
 *
 *
@@ -48,8 +47,43 @@ class ServiceRegister
 	*/
 	private function verifyExistsError(StdClass $error)
 	{
-		if(isset($error->nomeProgramaErro))
+		if(!empty(trim($error->nomeProgramaErro)))
 			throw new BoletoException($error->textoMensagemErro);
+	}
+
+	/**
+	*
+	* @param Ewersonfc\BBboleto\Requests\BoletoRequest
+	* @param [StdClass]
+	*/
+	private function setResponse(BoletoRequest $boletoRequest, StdClass $objectBoleto)
+	{
+		$response = new BoletoResponse;
+		$response->setNossoNumero($boletoRequest->getNossoNumero())
+			->setInicioNossoNumero('000')
+			->setNumeroDocumento($boletoRequest->getNossoNumero())
+			->setVencimento($boletoRequest->getDataVencimento()->format('d/m/Y'))
+			->setEmissao($boletoRequest->getDataEmissao()->format('d/m/Y'))
+			->setProcessamento($boletoRequest->getDataEmissao()->format('d/m/Y'))
+			->setValor($boletoRequest->getValorOriginal())
+			->setConvenio($boletoRequest->getConvenio())
+			->setCarteira($boletoRequest->getCarteira())
+			->setVariacaoCarteira($boletoRequest->getVariacaoCarteira())
+			->setPagador($boletoRequest->getPagador())
+			->setDemonstrativo($boletoRequest->getDescricaoTipoTitulo())
+			->setInstrucoes($boletoRequest->getInstrucoes())
+			->setAceite($boletoRequest->getAceite())
+			->setAgencia($objectBoleto->codigoPrefixoDependenciaBeneficiario)
+			->setConta($objectBoleto->numeroContaCorrenteBeneficiario)
+			->setContaDigito('0')
+			->setNomeBeneficiario('Ewerson Carvalho')
+			->setDocumento('01011010000108')
+			->setEndereco($objectBoleto->nomeLogradouroBeneficiario)
+			->setCidade($objectBoleto->nomeMunicipioBeneficiario)
+			->setUf($objectBoleto->siglaUfBeneficiario);
+			// ->setLogo();
+
+		return $response;
 	}
 
 	/**
@@ -83,9 +117,8 @@ class ServiceRegister
 			throw new BoletoException($e->getMessage());
 		}
 
-		dd($client);
-		$bodyValid = $this->verifyExistsError((object) $body);
+		$this->verifyExistsError((object) $body);
 
-		return $bodyValid;
+		return $this->setResponse($boletoRequest, (object) $body);
 	}
 }

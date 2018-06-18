@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "144fef52a9ec7a81ac1fc6a229af1fad",
+    "content-hash": "8ef0cfcf92941a0db51cdd1bd76edcfa",
     "packages": [
         {
             "name": "cakephp/core",
@@ -459,17 +459,205 @@
             "time": "2018-06-12T14:37:15+00:00"
         },
         {
-            "name": "nesbot/carbon",
-            "version": "1.29.2",
+            "name": "jefersondaniel/novoboletophp",
+            "version": "0.5.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "ed6aa898982f441ccc9b2acdec51490f2bc5d337"
+                "url": "https://github.com/jefersondaniel/novoboletophp.git",
+                "reference": "36f66fa94eef7f9bcde454c50409a9ed22574325"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ed6aa898982f441ccc9b2acdec51490f2bc5d337",
-                "reference": "ed6aa898982f441ccc9b2acdec51490f2bc5d337",
+                "url": "https://api.github.com/repos/jefersondaniel/novoboletophp/zipball/36f66fa94eef7f9bcde454c50409a9ed22574325",
+                "reference": "36f66fa94eef7f9bcde454c50409a9ed22574325",
+                "shasum": ""
+            },
+            "require": {
+                "piotrooo/wsdl-creator": "1.*",
+                "twig/twig": "~1.18"
+            },
+            "require-dev": {
+                "phpunit/php-code-coverage": "1.2.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NovoBoletoPHP\\": "src/NovoBoletoPHP"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Jeferson Daniel",
+                    "email": "contato@jefersondaniel.com"
+                },
+                {
+                    "name": "Anderson Danilo",
+                    "email": "contato@andersondanilo.com"
+                }
+            ],
+            "description": "Geração de boletos em HTML e PDF. Baseado no boletophp",
+            "time": "2018-05-09T18:52:32+00:00"
+        },
+        {
+            "name": "league/fractal",
+            "version": "0.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/fractal.git",
+                "reference": "a0b350824f22fc2fdde2500ce9d6851a3f275b0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/a0b350824f22fc2fdde2500ce9d6851a3f275b0e",
+                "reference": "a0b350824f22fc2fdde2500ce9d6851a3f275b0e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.5",
+                "illuminate/contracts": "~5.0",
+                "mockery/mockery": "~0.9",
+                "pagerfanta/pagerfanta": "~1.0.0",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5",
+                "zendframework/zend-paginator": "~2.3"
+            },
+            "suggest": {
+                "illuminate/pagination": "The Illuminate Pagination component.",
+                "pagerfanta/pagerfanta": "Pagerfanta Paginator",
+                "zendframework/zend-paginator": "Zend Framework Paginator"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Fractal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Sturgeon",
+                    "email": "me@philsturgeon.uk",
+                    "homepage": "http://philsturgeon.uk/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle the output of complex data structures ready for API output.",
+            "homepage": "http://fractal.thephpleague.com/",
+            "keywords": [
+                "api",
+                "json",
+                "league",
+                "rest"
+            ],
+            "time": "2017-06-12T11:04:56+00:00"
+        },
+        {
+            "name": "letsdrink/ouzo-goodies",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/letsdrink/ouzo-goodies.git",
+                "reference": "685f3bbd9066ccf732db70290d3b96b2bedffc69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/letsdrink/ouzo-goodies/zipball/685f3bbd9066ccf732db70290d3b96b2bedffc69",
+                "reference": "685f3bbd9066ccf732db70290d3b96b2bedffc69",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ouzo\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ouzo developers",
+                    "email": "ouzo-framework@googlegroups.com"
+                }
+            ],
+            "description": "Utility classes, test assertions and mocking framework extracted from Ouzo framework.",
+            "homepage": "http://ouzoframework.org/",
+            "keywords": [
+                "TDD",
+                "asserts",
+                "mock",
+                "php",
+                "test",
+                "utilities",
+                "utils"
+            ],
+            "time": "2015-06-12T08:50:47+00:00"
+        },
+        {
+            "name": "mikehaertl/php-tmpfile",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikehaertl/php-tmpfile.git",
+                "reference": "0ff48ed52ffee46d0f21fc34e8806f15467eb9b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikehaertl/php-tmpfile/zipball/0ff48ed52ffee46d0f21fc34e8806f15467eb9b1",
+                "reference": "0ff48ed52ffee46d0f21fc34e8806f15467eb9b1",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mikehaertl\\tmp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Härtl",
+                    "email": "haertl.mike@gmail.com"
+                }
+            ],
+            "description": "A convenience class for temporary files",
+            "keywords": [
+                "files"
+            ],
+            "time": "2017-08-28T11:21:51+00:00"
+        },
+        {
+            "name": "nesbot/carbon",
+            "version": "1.30.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/briannesbitt/Carbon.git",
+                "reference": "863a1a651ea324e1838da3a52753a4239b9d4bea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/863a1a651ea324e1838da3a52753a4239b9d4bea",
+                "reference": "863a1a651ea324e1838da3a52753a4239b9d4bea",
                 "shasum": ""
             },
             "require": {
@@ -504,7 +692,60 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-05-29T15:23:46+00:00"
+            "time": "2018-06-15T11:52:26+00:00"
+        },
+        {
+            "name": "piotrooo/wsdl-creator",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/piotrooo/wsdl-creator.git",
+                "reference": "add6a96e11d4342be9af56ae05dd1d5a2f2e2270"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/piotrooo/wsdl-creator/zipball/add6a96e11d4342be9af56ae05dd1d5a2f2e2270",
+                "reference": "add6a96e11d4342be9af56ae05dd1d5a2f2e2270",
+                "shasum": ""
+            },
+            "require": {
+                "letsdrink/ouzo-goodies": "1.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.5",
+                "satooshi/php-coveralls": "dev-master",
+                "symfony/console": "v2.7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "WSDL\\": "src/",
+                    "Mocks\\": "tests/",
+                    "Factory\\": "tests/",
+                    "Clients\\": "examples/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Piotr Olaszewski",
+                    "email": "piotroo89@gmail.com"
+                }
+            ],
+            "description": "PHP WSDL creator using PHPdoc (annotations, reflections).",
+            "keywords": [
+                "annotations",
+                "creator",
+                "generator",
+                "php",
+                "reflections",
+                "soap",
+                "wsdl"
+            ],
+            "time": "2016-04-01T21:48:07+00:00"
         },
         {
             "name": "psr/container",
@@ -780,6 +1021,71 @@
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
             "time": "2018-05-30T07:26:09+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v1.35.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
+                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "symfony/debug": "^2.7",
+                "symfony/phpunit-bridge": "^3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.35-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2018-03-20T04:25:58+00:00"
         }
     ],
     "packages-dev": [],
