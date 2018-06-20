@@ -15,6 +15,10 @@ class BoletoResponseFactory
 	*/
 	public function make(BoletoRequest $boletoRequest, StdClass $objectBoleto)
 	{
+		$logradouro = $boletoRequest->getBeneficiario()->getLogradouro();
+		$municipio = $boletoRequest->getBeneficiario()->getMunicipio();
+		$uf = $boletoRequest->getBeneficiario()->getUf();
+
 		$response = new BoletoResponse;
 		$response->setNossoNumero($boletoRequest->getNossoNumero())
 			->setInicioNossoNumero('000')
@@ -33,11 +37,11 @@ class BoletoResponseFactory
 			->setAgencia($objectBoleto->codigoPrefixoDependenciaBeneficiario)
 			->setConta($objectBoleto->numeroContaCorrenteBeneficiario)
 			->setContaDigito('0')
-			->setNomeBeneficiario('Ewerson Carvalho')
-			->setDocumento('01011010000108')
-			->setEndereco($objectBoleto->nomeLogradouroBeneficiario)
-			->setCidade($objectBoleto->nomeMunicipioBeneficiario)
-			->setUf($objectBoleto->siglaUfBeneficiario);
+			->setNomeBeneficiario($boletoRequest->getBeneficiario()->getNome())
+			->setDocumento($boletoRequest->getBeneficiario()->getDocumento())
+			->setEndereco($logradouro?$logradouro:$objectBoleto->nomeLogradouroBeneficiario)
+			->setCidade($municipio?$municipio:$objectBoleto->nomeMunicipioBeneficiario)
+			->setUf($uf? $uf:$objectBoleto->siglaUfBeneficiario);
 
 		return $response;	
 	}

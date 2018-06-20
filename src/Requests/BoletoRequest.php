@@ -5,6 +5,7 @@ use Ewersonfc\BBboleto\Constants\Modalidade;
 use Ewersonfc\BBboleto\Constants\TipoTitulo;
 use Ewersonfc\BBboleto\Constants\RecebimentoParcial;
 use Ewersonfc\BBboleto\Entities\AvalistaEntity;
+use Ewersonfc\BBboleto\Entities\BeneficiarioEntity;
 use Ewersonfc\BBboleto\Entities\DescontoEntity;
 use Ewersonfc\BBboleto\Entities\InstrucoesEntity;
 use Ewersonfc\BBboleto\Entities\JurosEntity;
@@ -48,7 +49,7 @@ class BoletoRequest
 
 	private $campoUtilizacaoBeneficiario;
 
-	private $codigoTipoContaCaucao;
+	private $codigoTipoContaCaucao = 0;
 
 	private $nossoNumero; // = textoNumeroTITULOBeneficiario
 
@@ -297,6 +298,17 @@ class BoletoRequest
 	public function setAvalista(AvalistaEntity $avalista)
 	{
 	    $this->avalista = $avalista;
+	    return $this;
+	}
+
+	public function getBeneficiario()
+	{
+	    return $this->beneficiario;
+	}
+	 
+	public function setBeneficiario(BeneficiarioEntity $beneficiario)
+	{
+	    $this->beneficiario = $beneficiario;
 	    return $this;
 	}
 }

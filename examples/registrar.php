@@ -11,6 +11,7 @@ require 'vendor/autoload.php';
 use Ewersonfc\BBboleto\BancoDoBrasil;
 use Ewersonfc\BBboleto\Constants\TipoDocumento;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
+use Ewersonfc\BBboleto\Entities\BeneficiarioEntity;
 use Ewersonfc\BBboleto\Exceptions\BoletoException;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 
@@ -22,6 +23,12 @@ $bancoDoBrasil = new BancoDoBrasil([
 	
 ]);
 	
+$beneficiario = new BeneficiarioEntity;
+$beneficiario->setTipoDocumento(TipoDocumento::CNPJ)
+	->setDocumento('62.999.992\0001-60')
+	->setNome('E-htl Viagens On-line');
+
+
 $pagador = new PagadorEntity;
 $pagador->setTipoDocumento(TipoDocumento::CNPJ)
 	->setDocumento('62.999.992\0001-60')
@@ -43,9 +50,9 @@ $boletoRequest->setConvenio(2625444)
 	->setDescricaoTipoTitulo("Texto livre")
 	->setSeuNumero('987654321987654') 
 	->setCampoUtilizacaoBeneficiario('0000000')
-	->setCodigoTipoContaCaucao(1)
-	->setNossoNumero('0000000197')
-	->setPagador($pagador); 
+	->setNossoNumero('0000000198')
+	->setPagador($pagador)
+	->setBeneficiario($beneficiario);
 
 $data = $bancoDoBrasil->register($boletoRequest);
 echo $data;

@@ -6,8 +6,10 @@ use StdClass;
 use Ewersonfc\BBboleto\Entities\OAuthEntity;
 use Ewersonfc\BBboleto\Entities\InstrucoesEntity;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
+use Ewersonfc\BBboleto\Entities\BeneficiarioEntity;
 use Ewersonfc\BBboleto\Exceptions\PagadorException;
 use Ewersonfc\BBboleto\Exceptions\BoletoException;
+use Ewersonfc\BBboleto\Exceptions\BeneficiarioException;
 use Ewersonfc\BBboleto\Factories\BoletoResponseFactory;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 use Ewersonfc\BBboleto\Responses\BoletoResponse;
@@ -76,6 +78,9 @@ class ServiceRegister
 
 		if(!$boletoRequest->getPagador() instanceof PagadorEntity)
 			throw new PagadorException();
+
+		if(!$boletoRequest->getBeneficiario() instanceof BeneficiarioEntity)
+			throw new BeneficiarioException();
 
 		if(!$boletoRequest->getInstrucoes() instanceof InstrucoesEntity)
 			$boletoRequest->setInstrucoes(new InstrucoesEntity());
