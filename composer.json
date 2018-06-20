@@ -1,11 +1,17 @@
 {
+    "name": "ewersonfc/bbboleto",
+    "description": "Boleto Banco do Brasil",
+    "license": "MIT",
+    "authors": [{
+       "name": "Ewerson Carvalho",
+       "email": "ewersonfc@gmail.com"
+    }],
     "require": {
     	"php": ">=7.0",
         "guzzlehttp/guzzle": "~6.0",
         "illuminate/contracts": "^5.1",
         "nesbot/carbon": "^1.29",
         "illuminate/support": "^5.1",
-        "cakephp/utility": "^3.6",
         "league/fractal": "^0.17.0",
         "mikehaertl/php-tmpfile": "^1.1",
         "jefersondaniel/novoboletophp": " 0.5.*"
