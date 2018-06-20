@@ -18,9 +18,8 @@ use Ewersonfc\BBboleto\Services\ServiceLayoutBoleto;
 use Ewersonfc\BBboleto\Transformers\BoletoTransformer;
 use Ewersonfc\BBboleto\Validates\BancoDoBrasilValidate;
 
-
 /**
- * Class Itau
+ * Class BancoDoBrasil
  * @package Ewersonfc/BBboleto
  */
 class BancoDoBrasil
@@ -53,21 +52,29 @@ class BancoDoBrasil
 		$this->authorization = $serviceAuthorization->authorize($config);
 	}
 
+	/**
+	*
+	* @param Ewersonfc\BBboleto\Requests\BoletoRequest;
+	* @return [json]
+	*/
 	public function register(BoletoRequest $boletoRequest)
 	{
     	$serviveRegister = new ServiceRegister();
     	$boleto = $serviveRegister->register($boletoRequest, $this->authorization);
-    	$boleto->setLogo(array_get($this->config, 'logo', false));
+    	$boleto->setLogo(array_get($this->config, 'logo', 'http://placehold.it/200&text=logo'));
 
     	if(!$boleto instanceof BoletoResponse)
     		throw new BoletoException("Não foi possivel gerar boleto");
 
+    	$data = null;
     	if(array_get($this->config, 'formato') == Formato::PDF) 
-    		return (new ServiceLayoutBoleto)->dataToPdf($boleto);
+    		$data = (new ServiceLayoutBoleto)->dataToPdf($boleto);
 
     	if(array_get($this->config, 'formato') == Formato::HTML) 
-    		return (new ServiceLayoutBoleto)->dataToHtml($boleto);
+    		$data = (new ServiceLayoutBoleto)->dataToHtml($boleto);
 
-    	return Fractal::collection($boleto, new BoletoTransformer());
+	   	$serialize = Fractal::item($boleto, new BoletoTransformer($this->config, $data));
+	   	
+	   	return $serialize->toJson();
 	}
 }

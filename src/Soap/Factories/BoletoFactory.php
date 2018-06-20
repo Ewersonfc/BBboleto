@@ -27,13 +27,16 @@ class BoletoFactory
 		$data[] = new SoapVar($boletoRequest->getDataVencimento()->format('d.m.Y'), XSD_DATE, null, null, 'dataVencimentoTitulo', Config::NAMESPACE);
 		$data[] = new SoapVar(BancoDoBrasilHelper::formatMoney($boletoRequest->getValorOriginal()), XSD_STRING, null, null, 'valorOriginalTitulo', Config::NAMESPACE);
 
-		$data = $this->setDescontoOnBody($data, $boletoRequest->getDesconto());
+		if($boletoRequest->getDesconto() instanceof DescontoEntity) 
+			$data = $this->setDescontoOnBody($data, $boletoRequest->getDesconto());	
 
 		$data[] = new SoapVar($boletoRequest->getDiasProtesto(), XSD_INT, null, null, 'quantidadeDiaProtesto', Config::NAMESPACE);
 
-		$data = $this->setJurosOnBody($data, $boletoRequest->getJuros());
+		if($boletoRequest->getJuros() instanceof JurosEntity)
+			$data = $this->setJurosOnBody($data, $boletoRequest->getJuros());
 
-		$data = $this->setMultaOnBody($data, $boletoRequest->getMulta());
+		if($boletoRequest->getMulta() instanceof MultaEntity)
+			$data = $this->setMultaOnBody($data, $boletoRequest->getMulta());
 
 		$data[] = new SoapVar($boletoRequest->getAceite(), XSD_STRING, null, null, 'codigoAceiteTitulo', Config::NAMESPACE);
 		$data[] = new SoapVar($boletoRequest->getTipoTitulo(), XSD_STRING, null, null, 'codigoTipoTitulo', Config::NAMESPACE);
@@ -43,11 +46,12 @@ class BoletoFactory
 		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit($boletoRequest->getCampoUtilizacaoBeneficiario(), 25), XSD_STRING, null, null, 'textoCampoUtilizacaoBeneficiario', Config::NAMESPACE);
 		$data[] = new SoapVar($boletoRequest->getCodigoTipoContaCaucao(), XSD_INT, null, null, 'codigoTipoContaCaucao', Config::NAMESPACE);	
 		$data[] = new SoapVar(BancoDoBrasilHelper::makeNossoNumero($boletoRequest->getConvenio(), $boletoRequest->getNossoNumero()), XSD_STRING, null, null, 'textoNumeroTituloCliente', Config::NAMESPACE);
-		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit($boletoRequest->getInstrucoes(), 220), XSD_STRING, null, null, 'textoMensagemBloquetoOcorrencia', Config::NAMESPACE);
+		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit(implode(' - ', $boletoRequest->getInstrucoes()->getInstrucoes()), 220), XSD_STRING, null, null, 'textoMensagemBloquetoOcorrencia', Config::NAMESPACE);
 		
-	
-		$data = $this->setPagadorOnBody($data, $boletoRequest->getPagador());
-		$data = $this->setAvalistaOnBody($data, $boletoRequest->getAvalista());
+		if($boletoRequest->getPagador() instanceof PagadorEntity)
+			$data = $this->setPagadorOnBody($data, $boletoRequest->getPagador());
+		if($boletoRequest->getAvalista() instanceof AvalistaEntity)
+			$data = $this->setAvalistaOnBody($data, $boletoRequest->getAvalista());
 
 		$data[] = new SoapVar(Config::CHAVE_USUARIO, XSD_INT, null, null, 'codigoChaveUsuario', Config::NAMESPACE);
 		$data[] = new SoapVar(TipoCanal::IIB_WEBSERVICE, XSD_STRING, null, null, 'codigoTipoCanalSolicitacao', Config::NAMESPACE);
@@ -67,7 +71,7 @@ class BoletoFactory
 		$dataDesconto = [];
 
 		$dataDesconto[] = new SoapVar($descontoEntity->getTipo(), XSD_INT, null, null, 'codigoTipoDesconto', Config::NAMESPACE);
-		$dataDesconto[] = new SoapVar($descontoEntity->getData(), XSD_DATE, null, null, 'dataDescontoTitulo', Config::NAMESPACE);
+		$dataDesconto[] = new SoapVar($descontoEntity->getData()->format('d.m.Y'), XSD_DATE, null, null, 'dataDescontoTitulo', Config::NAMESPACE);
 		$dataDesconto[] = new SoapVar($descontoEntity->getPercentual(), XSD_STRING, null, null, 'percentualDescontoTitulo', Config::NAMESPACE);
 		$dataDesconto[] = new SoapVar(BancoDoBrasilHelper::formatMoney($descontoEntity->getValor()), XSD_STRING, null, null, 'valorDescontoTitulo', Config::NAMESPACE);
 		$dataDesconto[] = new SoapVar(BancoDoBrasilHelper::formatMoney($descontoEntity->getValorAbatimento()), XSD_STRING, null, null, 'valorAbatimentoTitulo', Config::NAMESPACE);

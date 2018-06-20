@@ -6,6 +6,7 @@ use Ewersonfc\BBboleto\Constants\TipoTitulo;
 use Ewersonfc\BBboleto\Constants\RecebimentoParcial;
 use Ewersonfc\BBboleto\Entities\AvalistaEntity;
 use Ewersonfc\BBboleto\Entities\DescontoEntity;
+use Ewersonfc\BBboleto\Entities\InstrucoesEntity;
 use Ewersonfc\BBboleto\Entities\JurosEntity;
 use Ewersonfc\BBboleto\Entities\MultaEntity;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
@@ -271,7 +272,7 @@ class BoletoRequest
 	    return $this->instrucoes;
 	}
 	 
-	public function setInstrucoes($instrucoes)
+	public function setInstrucoes(InstrucoesEntity $instrucoes)
 	{
 	    $this->instrucoes = $instrucoes;
 	    return $this;

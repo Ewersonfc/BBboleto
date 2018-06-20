@@ -12,6 +12,7 @@ class ServiceLayoutBoleto
 {
 	private function makeBoleto(BoletoResponse $boletoResponse)
 	{
+        $instrucoes = $boletoResponse->getInstrucoes()->getInstrucoes();
 		return [
 			'convenio' => $boletoResponse->getConvenio(),
             'nosso_numero' => $boletoResponse->getNossoNumero(),
@@ -27,11 +28,11 @@ class ServiceLayoutBoleto
             'sacado_documento' => $boletoResponse->getPagador()->getDocumento(),
             'endereco1' => $boletoResponse->getPagador()->getLogradouro().','.$boletoResponse->getPagador()->getBairro(),
             'endereco2' => $boletoResponse->getPagador()->getMunicipio().' - '.$boletoResponse->getPagador()->getUf().' - CEP '.$boletoResponse->getPagador()->getCep(),
-            'demonstrativo1' => $boletoResponse->getDemonstrativo(),
-            // 'instrucoes1' => array_shift($boleto['textoInformacaoClienteBeneficiario']),
-            // 'instrucoes2' => array_shift($boleto['textoInformacaoClienteBeneficiario']),
-            // 'instrucoes3' => array_shift($boleto['textoInformacaoClienteBeneficiario']),
-            // 'instrucoes4' => implode(', ', $boleto['textoInformacaoClienteBeneficiario']),
+            'demonstrativo1' => $boletoResponse->getInstrucoes()->getDemonstrativo(),
+            'instrucoes1' => array_shift($instrucoes),
+            'instrucoes2' => array_shift($instrucoes),
+            'instrucoes3' => array_shift($instrucoes),
+            'instrucoes4' => implode(', ', $instrucoes),
             'aceite' => $boletoResponse->getAceite(),
             'especie' => $boletoResponse->getMoeda(),
             'agencia' => $boletoResponse->getAgencia(),
@@ -42,7 +43,7 @@ class ServiceLayoutBoleto
             'endereco' => $boletoResponse->getEndereco(),
             'cidade_uf' => $boletoResponse->getCidade().'-'.$boletoResponse->getUf(),
             'cedente' => $boletoResponse->getNomeBeneficiario(),
-            'logo_empresa' => $logoEmpresa,
+            'logo_empresa' => $boletoResponse->getLogo(),
         ];
 
           

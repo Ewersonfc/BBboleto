@@ -3,6 +3,7 @@
 namespace Ewersonfc\BBboleto\Responses;
 
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
+use Ewersonfc\BBboleto\Entities\InstrucoesEntity;
 
 class BoletoResponse
 {
@@ -218,7 +219,7 @@ class BoletoResponse
 	    return $this->instrucoes;
 	}
 	 
-	public function setInstrucoes($instrucoes)
+	public function setInstrucoes(InstrucoesEntity $instrucoes)
 	{
 	    $this->instrucoes = $instrucoes;
 	    return $this;

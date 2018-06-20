@@ -3,14 +3,12 @@
 namespace Ewersonfc\BBboleto\Services;
 
 use StdClass;
-use Ewersonfc\BBboleto\Entities\AvalistaEntity;
 use Ewersonfc\BBboleto\Entities\OAuthEntity;
-use Ewersonfc\BBboleto\Entities\DescontoEntity;
-use Ewersonfc\BBboleto\Entities\JurosEntity;
-use Ewersonfc\BBboleto\Entities\MultaEntity;
+use Ewersonfc\BBboleto\Entities\InstrucoesEntity;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
 use Ewersonfc\BBboleto\Exceptions\PagadorException;
 use Ewersonfc\BBboleto\Exceptions\BoletoException;
+use Ewersonfc\BBboleto\Factories\BoletoResponseFactory;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 use Ewersonfc\BBboleto\Responses\BoletoResponse;
 use Ewersonfc\BBboleto\Soap\Config;
@@ -33,11 +31,18 @@ class ServiceRegister
 
 	/**
 	*
+	* @var Ewersonfc\BBboleto\Factories\BoletoResponseFactory
+	*/
+	private $boletoResponseFactory;
+
+	/**
+	*
 	* @param Ewersonfc\BBboleto\Soap\Factories\BoletoFactory
 	*/ 
 	function __construct()
 	{
 		$this->boletoFactory = new BoletoFactory;
+		$this->boletoResponseFactory = new BoletoResponseFactory;
 	}
 
 	/**
@@ -58,32 +63,7 @@ class ServiceRegister
 	*/
 	private function setResponse(BoletoRequest $boletoRequest, StdClass $objectBoleto)
 	{
-		$response = new BoletoResponse;
-		$response->setNossoNumero($boletoRequest->getNossoNumero())
-			->setInicioNossoNumero('000')
-			->setNumeroDocumento($boletoRequest->getNossoNumero())
-			->setVencimento($boletoRequest->getDataVencimento()->format('d/m/Y'))
-			->setEmissao($boletoRequest->getDataEmissao()->format('d/m/Y'))
-			->setProcessamento($boletoRequest->getDataEmissao()->format('d/m/Y'))
-			->setValor($boletoRequest->getValorOriginal())
-			->setConvenio($boletoRequest->getConvenio())
-			->setCarteira($boletoRequest->getCarteira())
-			->setVariacaoCarteira($boletoRequest->getVariacaoCarteira())
-			->setPagador($boletoRequest->getPagador())
-			->setDemonstrativo($boletoRequest->getDescricaoTipoTitulo())
-			->setInstrucoes($boletoRequest->getInstrucoes())
-			->setAceite($boletoRequest->getAceite())
-			->setAgencia($objectBoleto->codigoPrefixoDependenciaBeneficiario)
-			->setConta($objectBoleto->numeroContaCorrenteBeneficiario)
-			->setContaDigito('0')
-			->setNomeBeneficiario('Ewerson Carvalho')
-			->setDocumento('01011010000108')
-			->setEndereco($objectBoleto->nomeLogradouroBeneficiario)
-			->setCidade($objectBoleto->nomeMunicipioBeneficiario)
-			->setUf($objectBoleto->siglaUfBeneficiario);
-			// ->setLogo();
-
-		return $response;
+		return $this->boletoResponseFactory->make($boletoRequest, $objectBoleto);
 	}
 
 	/**
@@ -93,20 +73,13 @@ class ServiceRegister
 	*/
 	public function register(BoletoRequest $boletoRequest, OAuthEntity $oAuthEntity)
 	{
-		if(!$boletoRequest->getDesconto() instanceof DescontoEntity)
-			$boletoRequest->setDesconto(new DescontoEntity());
-
-		if(!$boletoRequest->getJuros() instanceof JurosEntity)
-			$boletoRequest->setJuros(new JurosEntity());
-
-		if(!$boletoRequest->getMulta() instanceof MultaEntity)
-			$boletoRequest->setMulta(new MultaEntity());
 
 		if(!$boletoRequest->getPagador() instanceof PagadorEntity)
 			throw new PagadorException();
 
-		if(!$boletoRequest->getAvalista() instanceof AvalistaEntity)
-			$boletoRequest->setAvalista(new AvalistaEntity());
+		if(!$boletoRequest->getInstrucoes() instanceof InstrucoesEntity)
+			$boletoRequest->setInstrucoes(new InstrucoesEntity());
+
 
 		$boletoBody = $this->boletoFactory->make($boletoRequest);
 

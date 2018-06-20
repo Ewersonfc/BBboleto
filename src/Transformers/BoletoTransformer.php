@@ -1,16 +1,44 @@
 <?php namespace Ewersonfc\BBboleto\Transformers;
 
 use League\Fractal;
+use Ewersonfc\BBboleto\Services\ServiceLayoutBoleto;
+use Ewersonfc\BBboleto\Helpers\BancoDoBrasil as BancoDoBrasilHelper;
+use Ewersonfc\BBboleto\Responses\BoletoResponse;
 
 class BoletoTransformer extends Fractal\TransformerAbstract
-{
-	    /**
+{   
+
+    /**
+    *
+    * @var 
+    */
+    private $boleto;
+	
+    /**
+    *
+    * @param [array]
+    * @param [string]
+    */
+
+    function __construct(array $config, string $boleto)
+    {
+        $this->boleto = $boleto;
+        $this->cachePath = data_get($config,'cachePath', false);
+    }
+
+    /**
+     *
      * @param BoletoResponse $boleto
      * @return array
      */
     public function transform(BoletoResponse $boletoResponse)
     {
+        
+        $instrucoes = $boletoResponse->getInstrucoes()->getInstrucoes();
+
         return [
+            'id' => $boletoResponse->getNossoNumero(),
+            'convenio' => $boletoResponse->getConvenio(),
             'nosso_numero' => $boletoResponse->getNossoNumero(),
             'numero_documento' => $boletoResponse->getNossoNumero(),
             'data_vencimento' => $boletoResponse->getVencimento(),
@@ -24,11 +52,8 @@ class BoletoTransformer extends Fractal\TransformerAbstract
             'sacado_documento' => $boletoResponse->getPagador()->getDocumento(),
             'endereco1' => $boletoResponse->getPagador()->getLogradouro().','.$boletoResponse->getPagador()->getBairro(),
             'endereco2' => $boletoResponse->getPagador()->getMunicipio().' - '.$boletoResponse->getPagador()->getUf().' - CEP '.$boletoResponse->getPagador()->getCep(),
-            'demonstrativo1' => $boletoResponse->getDemonstrativo(),
-            // 'instrucoes1' => array_shift($boleto['textoInformacaoClienteBeneficiario']),
-            // 'instrucoes2' => array_shift($boleto['textoInformacaoClienteBeneficiario']),
-            // 'instrucoes3' => array_shift($boleto['textoInformacaoClienteBeneficiario']),
-            // 'instrucoes4' => implode(', ', $boleto['textoInformacaoClienteBeneficiario']),
+            'demonstrativo1' => $boletoResponse->getInstrucoes()->getDemonstrativo(),
+            'instrucoes' => $instrucoes,
             'aceite' => $boletoResponse->getAceite(),
             'especie' => $boletoResponse->getMoeda(),
             'agencia' => $boletoResponse->getAgencia(),
@@ -36,11 +61,11 @@ class BoletoTransformer extends Fractal\TransformerAbstract
             'conta_dv' => '',
             'identificacao' => $boletoResponse->getNomeBeneficiario(),
             'cpf_cnpj' => BancoDoBrasilHelper::formatCnpj($boletoResponse->getDocumento()),
-            'endereco' => $boletoResponse->setEndereco(),
+            'endereco' => $boletoResponse->getEndereco(),
             'cidade_uf' => $boletoResponse->getCidade().'-'.$boletoResponse->getUf(),
             'cedente' => $boletoResponse->getNomeBeneficiario(),
-            // 'logo_empresa' => $logoEmpresa,
+            'logo_empresa' => $boletoResponse->getLogo(),
+            'arquivo' => $this->boleto
         ];
     }
-
 }
