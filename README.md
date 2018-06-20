@@ -1,4 +1,4 @@
-# Boleto Itaú
+# Boleto Registrado Banco do Brasil via Webservice
 [![Latest Stable Version](https://poser.pugx.org/matheushack/itauboleto/v/stable)](https://packagist.org/packages/ewersonfc/bbboleto)
 [![Latest Unstable Version](https://poser.pugx.org/matheushack/itauboleto/v/unstable)](https://packagist.org/packages/ewersonfc/bbboleto)
 [![Total Downloads](https://poser.pugx.org/matheushack/itauboleto/downloads)](https://packagist.org/packages/ewersonfc/bbboleto)
