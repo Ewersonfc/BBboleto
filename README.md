@@ -5,7 +5,7 @@
 [![License](https://poser.pugx.org/matheushack/itauboleto/license)](https://packagist.org/packages/ewersonfc/bbboleto)
  
 
-Projeto para integração com módulo de cobrança do banco Itaú.
+Integração com Webservice Banco do Brasil para registro de Títulos/Boletos
 
 ## Instalação
 ### Composer
