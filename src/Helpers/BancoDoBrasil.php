@@ -67,7 +67,7 @@ class BancoDoBrasil
 
     public static function chacracterLimit($string, $limit)
     {
-    	return substr($string, 0, $limit);
+    	return mb_substr($string, 0, $limit, 'utf8');
     }
 
     public static function makeNossoNumero($convenio, $nossoNumero)

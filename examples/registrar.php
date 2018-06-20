@@ -20,7 +20,7 @@ $bancoDoBrasil = new BancoDoBrasil([
 	'clientId' => 'eyJpZCI6IjgwNDNiNTMtZjQ5Mi00YyIsImNvZGlnb1B1YmxpY2Fkb3IiOjEwOSwiY29kaWdvU29mdHdhcmUiOjEsInNlcXVlbmNpYWxJbnN0YWxhY2FvIjoxfQ',
 	'clientSecret' => 'eyJpZCI6IjBjZDFlMGQtN2UyNC00MGQyLWI0YSIsImNvZGlnb1B1YmxpY2Fkb3IiOjEwOSwiY29kaWdvU29mdHdhcmUiOjEsInNlcXVlbmNpYWxJbnN0YWxhY2FvIjoxLCJzZXF1ZW5jaWFsQ3JlZGVuY2lhbCI6MX0',
 	'production' => false,
-	'formato' => 'pdf',
+	'formato' => 'html',
 	
 ]);
 	
@@ -60,10 +60,10 @@ $boletoRequest->setConvenio(2625444)
 	->setDescricaoTipoTitulo("Texto livre")
 	->setSeuNumero('987654321987654') 
 	->setCampoUtilizacaoBeneficiario('0000000')
-	->setNossoNumero('0000000201')
+	->setNossoNumero('0000000207')
 	->setPagador($pagador)
 	->setBeneficiario($beneficiario)
 	->setInstrucoes($instrucoes);
 
 $data = $bancoDoBrasil->register($boletoRequest);
-echo $data;
+print_r(json_decode($data));

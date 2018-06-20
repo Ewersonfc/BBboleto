@@ -60,10 +60,8 @@ class ServiceLayoutBoleto
 	        ]);
 
           	$html = $factory->makeBoletoAsHTML(BoletoFactory::BANCO_DO_BRASIL, $data);
-            $file = new File($html, '.html');
-            $file->delete = false;
 
-            return $file->getFileName();
+            return $html;
         }catch(\Exception $e){
             return null;
         }
