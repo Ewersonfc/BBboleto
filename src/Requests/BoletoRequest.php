@@ -132,7 +132,7 @@ class BoletoRequest
 	 
 	public function setValorOriginal($valorOriginal)
 	{
-	    $this->valorOriginal = $valorOriginal;
+	    $this->valorOriginal = BancoDoBrasilHelper::formatMoney($valorOriginal);
 	    return $this;
 	}
 

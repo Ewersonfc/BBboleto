@@ -54,7 +54,7 @@ class MultaEntity
 	 
 	public function setValor($valor)
 	{
-	    $this->valor = $valor;
+	    $this->valor = BancoDoBrasilHelper::formatMoney($valor);
 	    return $this;
 	}
 }

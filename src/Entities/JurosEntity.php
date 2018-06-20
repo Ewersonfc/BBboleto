@@ -1,6 +1,7 @@
 <?php namespace Ewersonfc\BBboleto\Entities;
 
 use Ewersonfc\BBboleto\Constants\Juros;
+use Ewersonfc\BBboleto\Helpers\BancoDoBrasil as BancoDoBrasilHelper;
 
 class JurosEntity
 {
@@ -39,7 +40,7 @@ class JurosEntity
 	 
 	public function setValor($valor)
 	{
-	    $this->valor = $valor;
+	    $this->valor = BancoDoBrasilHelper::formatMoney($valor);
 	    return $this;
 	}
 

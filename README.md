@@ -33,8 +33,8 @@ $bancoDoBrasil = new BancoDoBrasil([
 
 $beneficiario = new BeneficiarioEntity;
 $beneficiario->setTipoDocumento(TipoDocumento::CNPJ)
-	->setDocumento('62.999.992\0001-60')
-	->setNome('E-htl Viagens On-line');
+	->setDocumento('73.553.069/0001-16')
+	->setNome('Empresa Fictícia Beneficiario');
 	
 $pagador = new PagadorEntity;
 $pagador->setTipoDocumento(TipoDocumento::CNPJ)
@@ -63,7 +63,31 @@ $boletoRequest->setConvenio(xxxxxx)
 
 $data = $bancoDoBrasil->register($boletoRequest);
 echo $data;
+
 ```
+## Instruções
+
+Para adicionar instruções que são impressas no boleto, é necessário preencher a entidade Instruções e "setar" no BoletoRequest.
+
+As instruções adicionadas abaixo serão impressas no boleto, elas estão relacionadas ao desconto, juros, multa e qualquer tipo de especificidade ligada a informação que deve ser apresentada ao pagador.
+```php
+// ... code
+use Ewersonfc\BBboleto\Entities\InstrucoesEntity
+
+$instrucoes = new InstrucoesEntity;
+$instrucoes->setInstrucoes([
+	'- instrução 1',
+	'- instrução teste 2',
+	'- instrução teste 3',
+])->setDemonstrativo("Demonstrativo teste");
+
+$boletoRequest = new BoletoRequest();
+	//... outros set's
+	->setInstrucoes($instrucoes)
+	// ... 
+
+```
+
 ## Desconto
 Para adicionar a instrução de desconto em seu boleto é necessário preencher a entendidade Desconto e "setar" no BoletoRequest.
 
@@ -127,5 +151,27 @@ $multa->setTipo(Multa::VALOR)
 $boletoRequest = new BoletoRequest();
 	//... outros set's
 	->setMulta($multa)
+	// ... 
+```
+
+## Avalista
+Para adicionar avalista em seu boleto é necessário preencher a entendidade Multa e "setar" no BoletoRequest.
+
+Nota: O Avalista é opcional, caso não tenha desconto no título não há necessiade de preencher esta entidade e tbm não há necessidade de "setar" no Request
+
+```php
+// ... code
+use Ewersonfc\BBboleto\Constants\TipoDocumento;
+use Ewersonfc\BBboleto\Entities\AvalistaEntity;
+
+// ... code 
+$avalista = new AvalistaEntity;
+$avalista->setTipoDocumento(TipoDocumento::CNPJ)
+	->setDocumento('09.123.123\0001-81')
+	->setNome('Ewerson Carvalho');
+
+$boletoRequest = new BoletoRequest();
+	//... outros set's
+	->setAvalista($avalista)
 	// ... 
 ```
