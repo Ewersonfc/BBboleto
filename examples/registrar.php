@@ -48,4 +48,4 @@ $boletoRequest->setConvenio(2625444)
 	->setPagador($pagador); 
 
 $data = $bancoDoBrasil->register($boletoRequest);
-print_r($data);
+echo $data;
