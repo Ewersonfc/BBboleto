@@ -10,7 +10,7 @@ Integração com Webservice Banco do Brasil para registro de Títulos/Boletos
 ## Instalação
 ### Composer
 ```
-"ewersonfc/bbboleto": "^1.0"
+"ewersonfc/bbboleto": "^1.0.1"
 ```
 
 ## Como usar
