@@ -8,8 +8,8 @@
 namespace Ewersonfc\BBboleto\Validates;
 
 /**
- * Class BoletoValidate
- * @package MatheusHack\ItauBoleto\Validates
+ * Class BancoDoBrasilValidate
+ * @package 
  */
 class BancoDoBrasilValidate
 {

@@ -14,7 +14,7 @@
         "illuminate/support": "^5.1",
         "league/fractal": "^0.17.0",
         "mikehaertl/php-tmpfile": "^1.1",
-        "jefersondaniel/novoboletophp": "dev-master"
+        "jefersondaniel/novoboletophp": "0.5.*"
     },
     "autoload": {
     	"psr-4": {
