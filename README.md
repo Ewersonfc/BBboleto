@@ -1,8 +1,8 @@
 # Boleto Registrado Banco do Brasil via Webservice
-[![Latest Stable Version](https://poser.pugx.org/matheushack/itauboleto/v/stable)](https://packagist.org/packages/ewersonfc/bbboleto)
-[![Latest Unstable Version](https://poser.pugx.org/matheushack/itauboleto/v/unstable)](https://packagist.org/packages/ewersonfc/bbboleto)
-[![Total Downloads](https://poser.pugx.org/matheushack/itauboleto/downloads)](https://packagist.org/packages/ewersonfc/bbboleto)
-[![License](https://poser.pugx.org/matheushack/itauboleto/license)](https://packagist.org/packages/ewersonfc/bbboleto)
+[![Latest Stable Version](https://poser.pugx.org/ewersonfc/bbboleto/v/stable)](https://packagist.org/packages/ewersonfc/bbboleto)
+[![Latest Unstable Version](https://poser.pugx.org/ewersonfc/bbboleto/v/unstable)](https://packagist.org/packages/ewersonfc/bbboleto)
+[![Total Downloads](https://poser.pugx.org/ewersonfc/bbboleto/downloads)](https://packagist.org/packages/ewersonfc/bbboleto)
+[![License](https://poser.pugx.org/ewersonfc/bbboleto/license)](https://packagist.org/packages/ewersonfc/bbboleto)
  
 
 Integração com Webservice Banco do Brasil para registro de Títulos/Boletos
