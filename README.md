@@ -10,9 +10,13 @@ Integração com Webservice Banco do Brasil para registro de Títulos/Boletos
 ## Instalação
 ### Composer
 ```
-"ewersonfc/bbboleto": "^1.0.2"
+composer require ewersonfc/bbboleto
 ```
+Se preferir, você pode adicionar direto no seu arquivo composer.json.
 
+```
+"ewersonfc/bbboleto": "^1.0.3"
+```
 ## Como usar
 ```php
 require 'vendor/autoload.php';
