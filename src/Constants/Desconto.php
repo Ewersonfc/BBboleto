@@ -1,5 +1,9 @@
 <?php namespace Ewersonfc\BBboleto\Constants;
 
+/**
+ * Class Desconto
+ * @package Ewersonfc\BBboleto\Constants
+ */
 class Desconto 
 {
 	const SEM_DESCONTO = 0;

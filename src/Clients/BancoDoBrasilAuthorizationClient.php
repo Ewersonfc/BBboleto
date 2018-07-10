@@ -1,48 +1,56 @@
-<?php 
+<?php
 
 namespace Ewersonfc\BBboleto\Clients;
 
 
-use GuzzleHttp\Client;
 use Ewersonfc\BBboleto\Exceptions\OAuthException;
+use GuzzleHttp\Client;
 
+/**
+ * Class BancoDoBrasilAuthorizationClient
+ * @package Ewersonfc\BBboleto\Clients
+ */
 class BancoDoBrasilAuthorizationClient
 {
 
-	const OAUTH = 'https://oauth.hm.bb.com.br/oauth/token';
+	const OAUTH_HM = 'https://oauth.hm.bb.com.br/oauth/token';
+
+	const OAUTH_PRODUCTION = 'https://oauth.bb.com.br/oauth/token';
 
 	const SCOPE = 'cobranca.registro-boletos';
 
 	const GRANT_TYPE = 'client_credentials';
 
-	/**
-	*
-	* @var Client
-	*/
-
+    /**
+     * @var Client
+     */
 	private $httpClient;
 
-	/**
-	*
-	* Constructor method
-	* @param Client
-	*/
+    /**
+     *
+     * Constructor method
+     * @param array $config
+     */
 	function __construct(array $config)
 	{
 		$this->httpClient = new Client();
 
 		$this->clientId = array_get($config, 'clientId', null);
 		$this->clientSecret = array_get($config, 'clientSecret', null);
-		$this->oAuthUrl = array_get($config, 'production', false) == false? self::OAUTH : self::OAUTH;
+		$this->oAuthUrl = array_get($config, 'production', false) == false? self::OAUTH_HM : self::OAUTH_PRODUCTION;
 	}
 
+    /**
+     * @return bool
+     */
 	public function __callBancoDoBrasil()
 	{
 		return $this->__authorize();
 	}
 
-	 /**
+    /**
      * @return bool
+     * @throws OAuthException
      */
     private function __authorize()
     {

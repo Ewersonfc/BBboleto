@@ -17,7 +17,8 @@ class ServiceAuthorization
 			->__callBancoDoBrasil();
 		
 		$oAuthEntity = new OAuthEntity;
-		$oAuthEntity->setAccessToken($authorize->access_token);
+		$oAuthEntity->setAccessToken($authorize->access_token)
+		    ->setEnvironment(array_get($config, 'production', false));
 
 		return $oAuthEntity;
 		

@@ -6,15 +6,21 @@ use Ewersonfc\BBboleto\Entities\JurosEntity;
 use Ewersonfc\BBboleto\Entities\MultaEntity;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
 use Ewersonfc\BBboleto\Entities\AvalistaEntity;
-use Ewersonfc\BBboleto\Exceptions\BoletoException;
 use Ewersonfc\BBboleto\Helpers\BancoDoBrasil as BancoDoBrasilHelper;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 use Ewersonfc\BBboleto\Constants\TipoCanal;
 use Ewersonfc\BBboleto\Soap\Config;
 
-
+/**
+ * Class BoletoFactory
+ * @package Ewersonfc\BBboleto\Soap\Factories
+ */
 class BoletoFactory
 {
+    /**
+     * @param BoletoRequest $boletoRequest
+     * @return array
+     */
 	public function make(BoletoRequest $boletoRequest)
 	{
 		$data = [];
@@ -59,13 +65,11 @@ class BoletoFactory
 		return $data;
 	}
 
-	/**
-	*
-	* Merge Array Desconto
-	* @param array
-	* @param Ewersonfc\BBboleto\Entities\DescontoEntity
-	* @return array
-	*/
+    /**
+     * @param array $data
+     * @param DescontoEntity $descontoEntity
+     * @return array
+     */
 	private function setDescontoOnBody(array $data, DescontoEntity $descontoEntity)
 	{
 		$dataDesconto = [];
@@ -79,13 +83,11 @@ class BoletoFactory
 		return array_merge($data, $dataDesconto);
 	}
 
-	/**
-	*
-	* Merge Array Juros
-	* @param array
-	* @param Ewersonfc\BBboleto\Entities\JurosEntity
-	* @return array
-	*/
+    /**
+     * @param array $data
+     * @param JurosEntity $jurosEntity
+     * @return array
+     */
 	private function setJurosOnBody(array $data, JurosEntity $jurosEntity)
 	{
 		$dataJuros = [];
@@ -97,13 +99,11 @@ class BoletoFactory
 		return array_merge($data, $dataJuros);
 	}
 
-	/**
-	*
-	* Merge Array Multa
-	* @param array
-	* @param Ewersonfc\BBboleto\Entities\MultaEntity
-	* @return array
-	*/
+    /**
+     * @param array $data
+     * @param MultaEntity $multaEntity
+     * @return array
+     */
 	private function setMultaOnBody(array $data, MultaEntity $multaEntity)
 	{
 		$dataMulta = [];
@@ -116,13 +116,11 @@ class BoletoFactory
 		return array_merge($data, $dataMulta);
 	}
 
-	/**
-	*
-	* Merge Pagador 
-	* @param array
-	* @param Ewersonfc\BBboleto\Entities\PagadorEntity
-	* @return array 
-	*/
+    /**
+     * @param array $data
+     * @param PagadorEntity $pagadorEntity
+     * @return array
+     */
 	private function setPagadorOnBody(array $data, PagadorEntity $pagadorEntity)
 	{
 		$dataPagador = [];
@@ -140,13 +138,11 @@ class BoletoFactory
 		return array_merge($data, $dataPagador);
 	}
 
-	/**
-	*
-	* Merge Avalista 
-	* @param array
-	* @param Ewersonfc\BBboleto\Entities\AvalistaEntity
-	* @return array 
-	*/
+    /**
+     * @param array $data
+     * @param AvalistaEntity $avalistaEntity
+     * @return array
+     */
 	private function setAvalistaOnBody(array $data, AvalistaEntity $avalistaEntity)
 	{
 		$dataAvalista = [];

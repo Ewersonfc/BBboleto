@@ -24,16 +24,14 @@ use Ewersonfc\BBboleto\Validates\BancoDoBrasilValidate;
  */
 class BancoDoBrasil
 {
-	/**
-	*
-	* @var 
-	*/
+    /**
+     * @var Entities\OAuthEntity 
+     */
 	private $authorization;
 
-	/**
-	*
-	* @var 
-	*/
+    /**
+     * @var array
+     */
 	private $config;
 
 	/**
@@ -52,11 +50,11 @@ class BancoDoBrasil
 		$this->authorization = $serviceAuthorization->authorize($config);
 	}
 
-	/**
-	*
-	* @param Ewersonfc\BBboleto\Requests\BoletoRequest;
-	* @return [json]
-	*/
+    /**
+     * @param BoletoRequest $boletoRequest
+     * @return mixed
+     * @throws BoletoException
+     */
 	public function register(BoletoRequest $boletoRequest)
 	{
     	$serviveRegister = new ServiceRegister();

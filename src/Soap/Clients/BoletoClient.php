@@ -9,15 +9,17 @@ use Ewersonfc\BBboleto\Soap\Config;
 class BoletoClient extends SoapClient
 {
 
-	/**
-	*
-	* Constructor Method
-	*/
+    /**
+     * BoletoClient constructor.
+     * @param OAuthEntity $oAuthEntity
+     */
 	function __construct(OAuthEntity $oAuthEntity)
 	{
+	    $wsdl = $oAuthEntity->getEnvironment() == false? Config::WSDL_HM : Config::WSDL_PRODUCTION;
+
 		parent::__construct(null, [			
 			'exceptions' => 0,
-            'location' => Config::WSDL,
+            'location' => $wsdl,
     		'trace' => 1,
             'uri' => Config::NAMESPACE,
     		'connection_timeout' => 1800,

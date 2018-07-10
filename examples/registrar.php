@@ -13,12 +13,11 @@ use Ewersonfc\BBboleto\Constants\TipoDocumento;
 use Ewersonfc\BBboleto\Entities\PagadorEntity;
 use Ewersonfc\BBboleto\Entities\BeneficiarioEntity;
 use Ewersonfc\BBboleto\Entities\InstrucoesEntity;
-use Ewersonfc\BBboleto\Exceptions\BoletoException;
 use Ewersonfc\BBboleto\Requests\BoletoRequest;
 
 $bancoDoBrasil = new BancoDoBrasil([
-	'clientId' => 'xx',
-	'clientSecret' => 'xx',
+	'clientId' => 'xxxx',
+	'clientSecret' => 'xxx',
 	'production' => false,
 	'formato' => 'html',
 	
@@ -60,7 +59,7 @@ $boletoRequest->setConvenio(2625444)
 	->setDescricaoTipoTitulo("Texto livre")
 	->setSeuNumero('987654321987654') 
 	->setCampoUtilizacaoBeneficiario('0000000')
-	->setNossoNumero('0000000207')
+	->setNossoNumero('0000000301')
 	->setPagador($pagador)
 	->setBeneficiario($beneficiario)
 	->setInstrucoes($instrucoes);
