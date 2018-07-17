@@ -129,7 +129,7 @@ class BoletoFactory
 		$dataPagador[] = new SoapVar(BancoDoBrasilHelper::numbers($pagadorEntity->getDocumento()), XSD_STRING, null, null, 'numeroInscricaoPagador', Config::NAMESPACE);
 		$dataPagador[] = new SoapVar($pagadorEntity->getNome(), XSD_STRING, null, null, 'nomePagador', Config::NAMESPACE);
 		$dataPagador[] = new SoapVar($pagadorEntity->getLogradouro(), XSD_STRING, null, null, 'textoEnderecoPagador', Config::NAMESPACE);
-		$dataPagador[] = new SoapVar(BancoDoBrasilHelper::numbers($pagadorEntity->getCep()), XSD_INT, null, null, 'numeroCepPagador', Config::NAMESPACE);
+		$dataPagador[] = new SoapVar(BancoDoBrasilHelper::numbers($pagadorEntity->getCep()), XSD_STRING, null, null, 'numeroCepPagador', Config::NAMESPACE);
 		$dataPagador[] = new SoapVar($pagadorEntity->getMunicipio(), XSD_STRING, null, null, 'nomeMunicipioPagador', Config::NAMESPACE);
 		$dataPagador[] = new SoapVar($pagadorEntity->getBairro(), XSD_STRING, null, null, 'nomeBairroPagador', Config::NAMESPACE);
 		$dataPagador[] = new SoapVar($pagadorEntity->getUf(), XSD_STRING, null, null, 'siglaUfPagador', Config::NAMESPACE);
