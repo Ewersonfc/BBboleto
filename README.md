@@ -15,7 +15,7 @@ composer require ewersonfc/bbboleto
 Se preferir, você pode adicionar direto no seu arquivo composer.json.
 
 ```
-"ewersonfc/bbboleto": "^1.0.3"
+"ewersonfc/bbboleto": "^1.0.4"
 ```
 ## Como usar
 ```php
