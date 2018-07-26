@@ -52,7 +52,7 @@ class BoletoFactory
 		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit($boletoRequest->getCampoUtilizacaoBeneficiario(), 25), XSD_STRING, null, null, 'textoCampoUtilizacaoBeneficiario', Config::NAMESPACE);
 		$data[] = new SoapVar($boletoRequest->getCodigoTipoContaCaucao(), XSD_INT, null, null, 'codigoTipoContaCaucao', Config::NAMESPACE);	
 		$data[] = new SoapVar(BancoDoBrasilHelper::makeNossoNumero($boletoRequest->getConvenio(), $boletoRequest->getNossoNumero()), XSD_STRING, null, null, 'textoNumeroTituloCliente', Config::NAMESPACE);
-		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit(implode(' - ', $boletoRequest->getInstrucoes()->getInstrucoes()), 220), XSD_STRING, null, null, 'textoMensagemBloquetoOcorrencia', Config::NAMESPACE);
+//		$data[] = new SoapVar(BancoDoBrasilHelper::chacracterLimit(implode(' - ', $boletoRequest->getInstrucoes()->getInstrucoes()), 220), XSD_STRING, null, null, 'textoMensagemBloquetoOcorrencia', Config::NAMESPACE);
 		
 		if($boletoRequest->getPagador() instanceof PagadorEntity)
 			$data = $this->setPagadorOnBody($data, $boletoRequest->getPagador());
